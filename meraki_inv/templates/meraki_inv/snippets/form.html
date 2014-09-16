@@ -1,0 +1,27 @@
+            <div>
+              * required field
+            </div>
+            {% if form.non_field_errors %}
+              {% for error in form.non_field_errors %}
+                {{ error }}
+              {% endfor %}
+            {% endif %}
+            <form role="form" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="row">
+                <div class="form-group">
+                  <label class="col-sm-2 text-right" for="{{ field.label }}">{{ field.label }}{% if field.field.required %}*{% endif %}</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" id="id_{{ field.label|lower }}" name="{{ field.label|lower }}" value="{{ field.value|default_if_none:"" }}">
+                  </div>
+                </div>
+              </div>
+              {% if field.errors %}
+                {% for error in field.errors %}
+                <div class="row">
+                  <span class="help-block col-sm-2 text-right">{{ error }}</span>
+                </div>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}

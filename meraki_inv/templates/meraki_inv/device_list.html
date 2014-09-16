@@ -1,0 +1,39 @@
+{% extends "meraki_inv/device_base.html" %}
+
+{% block device_content %}
+  <div class="page-header">
+    <h1>Devices</h1>
+  </div>
+  <div class="col-md-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Make</th>
+          <th>Model Number</th>
+          <th>Serial</th>
+          <th>Access</th>
+          <th>Loaned</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for device in device_list %}
+        <tr>
+          <td><a href="{% url "meraki_inv:device_item" device_id=device.id %}">{{ device.model }}</a></td>
+          <td>{{ device.make }}</td>
+          <td>{{ device.model_num }}</td>
+          <td>{{ device.serial }}</td>
+          <td>{{ device.access }}</td>
+          {% if not device.loaned.returned %}
+            <td>{{ device.loaned.mooch }}</td>
+          {% else %}
+            <td>Not currently</td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <ul>
+  </ul>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "meraki_inv/device_base.html" %}
+
+{% block device_content %}
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Edit Device</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-12">
+          {% include "meraki_inv/snippets/form.html" %}
+            <input type="submit" value="Update" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

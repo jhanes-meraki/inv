@@ -1,0 +1,127 @@
+{% extends "meraki_inv/device_base.html" %}
+
+{% block device_content %}
+
+<div class="row">
+  <div class="col-sm-5">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ device.model }}</h3>
+        <form action="{% url "meraki_inv:device_edit" device_id=device.id %}" method="get">{% csrf_token %}
+          <button class="btn" type="submit">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+        </form>
+        <form action="{% url "meraki_inv:device_delete" device_id=device.id %}" method="post">{% csrf_token %}
+          <button class="btn" type="submit">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </form>
+        {% if device.loaned and not device.loaned.returned %}
+        <form action="{% url "meraki_inv:status_edit" device_id=device.id %}" method="post">{% csrf_token %}
+          <input class="btn" type="submit" value="Check in">
+        </form>
+        Loaned to {{ device.loaned.mooch }} by {{ device.loaned.loaner }} on: {{ device.loaned.loaned.date }}
+        {% else %}
+        <form action="{% url "meraki_inv:status_create" device_id=device.id %}" method="get">{% csrf_token %}
+          <input class="btn" type="submit" value="Check out">
+        </form>
+        Not currently on loan
+        {% endif %}
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-3 text-right">
+            Make:
+          </div>
+          <div class="col-sm-9 text-left">
+            {{ device.make }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right">
+            Model#:
+          </div>
+          <div class="col-sm-9 text-left">
+            {{ device.model_num }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right">
+            Serial:
+          </div>
+          <div class="col-sm-9 text-left">
+            {{ device.serial }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right">
+            Accessories:
+          </div>
+          <div class="col-sm-9 text-left">
+            {{ device.accessories }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right">
+            Features:
+          </div>
+          <div class="col-sm-9 text-left">
+            {{ device.features }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right">
+            Access:
+          </div>
+          <div class="col-sm-9 text-left">
+            {{ device.access }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right">
+            Username:
+          </div>
+          <div class="col-sm-9 text-left">
+            {{ device.uname }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right">
+          Password:
+          </div>
+          <div class="col-sm-9 text-left">
+            {{ device.pword }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-7">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <a href="{% url "meraki_inv:note_list" device_id=device.id %}"><h3 class="panel-title">Notes</h3></a>
+        <form action="{% url "meraki_inv:note_add" device_id=device.id %}" method="get">{% csrf_token %}
+          <button class="btn" type="submit">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </form>
+      </div>
+      <div class="panel-body">
+        {% for note in notes %}
+        <div class="row">
+          <div class="col-sm-3">
+            {{ note.edited }}
+          </div>
+          <div class="col-sm-2">
+            <a href="{% url "meraki_inv:note_item" device_id=device.id note_id=note.id %}">{{ note.name }}</a>
+          </div>
+          <div class="col-sm-7">
+            {{ note.desc }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "meraki_inv/device_base.html" %}
+
+{% block device_content %}
+  <div class="page-header">
+    <h1>Notes for {{ device.model }}</h1>
+    <a href="{% url "meraki_inv:device_item" device_id=device.id %}"><h3>{{ device.serial }}</h3></a>
+  </div>
+  <div class="col-md-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Last edit</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for note in notes %}
+        <tr>
+          <td><a href="{% url "meraki_inv:note_item" device_id=device.id note_id=note.id %}">{{ note.name }}</a></td>
+          <td>{{ note.desc }}</td>
+          <td>{{ note.edited }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <ul>
+  </ul>
+{% endblock %}
