@@ -10,7 +10,7 @@ class DeviceForm(forms.ModelForm):
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        exclude = ['device', 'edited']
+        exclude = ['edited']
 
 class StatusForm(forms.ModelForm):
     class Meta:
