@@ -14,18 +14,18 @@ class DeviceCreate(generic.CreateView):
 
 class DeviceDelete(generic.DeleteView):
     model = Device
-    pk_url_kwarg = "device_id"
+    pk_url_kwarg = "serial"
     success_url = reverse_lazy('meraki_inv:device_list')
 
 class DeviceDetail(generic.DetailView):
     model = Device
-    pk_url_kwarg = "device_id"
+    pk_url_kwarg = "serial"
 
     def get_context_data(self, **kwargs):
         context = super(DeviceDetail, self).get_context_data(**kwargs)
         context['status'] = Status.objects.filter(
-                device=self.kwargs['device_id'])
-        context['notes'] = Note.objects.filter(device=self.kwargs['device_id'])
+                device=self.kwargs['serial'])
+        context['notes'] = Note.objects.filter(device=self.kwargs['serial'])
         return context
 
 class DeviceList(generic.ListView):
@@ -53,10 +53,10 @@ class DeviceList(generic.ListView):
 class DeviceEdit(generic.UpdateView):
     model = Device
     form_class = DeviceForm
-    pk_url_kwarg = "device_id"
+    pk_url_kwarg = "serial"
     template_name_suffix = '_update_form'
 
-class NoteAdd(generic.CreateView):
+class NoteCreate(generic.CreateView):
     model = Note
     form_class = NoteForm
 
@@ -67,17 +67,19 @@ class NoteDelete(generic.DeleteView):
     def get_object(self, queryset=None):
             if queryset is None:
                 queryset = self.get_queryset()
-            device = self.kwargs['device_id']
+            device = self.kwargs['serial']
             note = self.kwargs['note_id']
-            context = {'note_id':note, 'device_id':device}
+            context = {'note_id':note, 'serial':device}
             return context
 
     def delete(self, request, *args, **kwargs):
-        device = self.kwargs['device_id']
+        device = self.kwargs['serial']
         note = self.kwargs['note_id']
 
         note_obj = Note.objects.filter(device=device, id=note)
         note_obj.delete()
+        return HttpResponseRedirect(reverse('meraki_inv:note_list', \
+            kwargs={'serial': device}))
 
 class NoteDetail(generic.DetailView):
     model = Note
@@ -98,29 +100,24 @@ class NoteList(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(NoteList, self).get_context_data(**kwargs)
-        context['device'] = Device.objects.get(pk=self.kwargs['device_id'])
-        context['notes'] = Note.objects.filter(device=self.kwargs['device_id'])
+        context['device'] = Device.objects.get(pk=self.kwargs['serial'])
+        context['notes'] = Note.objects.filter(device=self.kwargs['serial'])
         return context
 
 class StatusCreate(generic.CreateView):
     model = Status
     form_class = StatusForm
-    pk_url_kwarg = "device_id"
-
-#   if request.GET:
-#       initial = request.GET.copy()
-#       print initial
-
+    pk_url_kwarg = "serial"
 
 class StatusUpdate(generic.UpdateView):
     model = Status
     form_class = StatusForm
-    pk_url_kwarg = "device_id"
+    pk_url_kwarg = "serial"
 
     def post(self, request, *args, **kwargs):
-        device = self.kwargs['device_id']
+        device = self.kwargs['serial']
         status = Status.objects.filter(device=device).latest()
         status.returned = datetime.datetime.now()
         status.save()
         return HttpResponseRedirect(reverse('meraki_inv:device_item', \
-            kwargs={'device_id': device}))
+            kwargs={'serial': device}))

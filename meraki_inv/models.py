@@ -13,15 +13,15 @@ class Device(models.Model):
     model = models.CharField(max_length=45)
     model_num = models.CharField("model_num", max_length=45, blank=True)
     pword = models.CharField(max_length=45,blank=True)
-    serial = models.CharField("serial", max_length=45)
+    serial = models.CharField("serial", primary_key=True, max_length=45)
     uname = models.CharField("uname", max_length=45, blank=True)
     def loaned(self):
-        loaned = Status.objects.filter(device=self.id).latest()
+        loaned = Status.objects.filter(device=self.serial).latest()
         return loaned
     def __unicode__(self):
         return self.model
     def get_absolute_url(self):
-        return reverse('meraki_inv:device_item', args=(self.pk,))
+        return reverse('meraki_inv:device_item', args=(self.serial,))
 
 class Status(models.Model):
     device = models.ForeignKey('Device')
@@ -30,7 +30,7 @@ class Status(models.Model):
     mooch = models.CharField(max_length=45)
     returned = models.DateTimeField('Date Returned', null=True)
     def get_absolute_url(self):
-        return reverse('meraki_inv:device_item', args=(self.device.id,))
+        return reverse('meraki_inv:device_item', args=(self.device.serial,))
     class Meta:
         get_latest_by = "loaned"
 
@@ -41,4 +41,4 @@ class Note(models.Model):
     submitted = models.DateField('Submitted', auto_now=True, editable=False)
     edited = models.DateField('Edited', auto_now=True, editable=False)
     def get_absolute_url(self):
-        return reverse('meraki_inv:device_item', args=(self.device.id,))
+        return reverse('meraki_inv:device_item', args=(self.device.serial,))

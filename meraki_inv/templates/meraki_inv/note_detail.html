@@ -7,12 +7,12 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">{{ note.name }}</h3>
-        <form action="{% url "meraki_inv:note_edit" note.device.id note.id %}" method="get">{% csrf_token %}
+        <form action="{% url "meraki_inv:note_edit" note.device.serial note.id %}" method="get">{% csrf_token %}
           <button class="btn" type="submit">
             <span class="glyphicon glyphicon-pencil"></span>
           </button>
         </form>
-        <form action="{% url "meraki_inv:note_delete" note.device.id note.id %}" method="post">{% csrf_token %}
+        <form action="{% url "meraki_inv:note_delete" note.device.serial note.id %}" method="post">{% csrf_token %}
           <button class="btn" type="submit">
             <span class="glyphicon glyphicon-trash"></span>
           </button>
@@ -24,7 +24,7 @@
             Device:
           </div>
           <div class="col-sm-9 text-left">
-            <a href="{% url "meraki_inv:device_item" device_id=note.device.id %}">{{ note.device.model }}</a>
+            <a href="{% url "meraki_inv:device_item" serial=note.device.serial %}">{{ note.device.model }}</a>
           </div>
           <div class="col-sm-3 text-right">
             Description:

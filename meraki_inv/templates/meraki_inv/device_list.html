@@ -19,7 +19,7 @@
       <tbody>
       {% for device in device_list %}
         <tr>
-          <td><a href="{% url "meraki_inv:device_item" device_id=device.id %}">{{ device.model }}</a></td>
+          <td><a href="{% url "meraki_inv:device_item" serial=device.serial %}">{{ device.model }}</a></td>
           <td>{{ device.make }}</td>
           <td>{{ device.model_num }}</td>
           <td>{{ device.serial }}</td>

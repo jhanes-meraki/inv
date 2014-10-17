@@ -7,23 +7,23 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">{{ device.model }}</h3>
-        <form action="{% url "meraki_inv:device_edit" device_id=device.id %}" method="get">{% csrf_token %}
+        <form action="{% url "meraki_inv:device_edit" serial=device.serial %}" method="get">{% csrf_token %}
           <button class="btn" type="submit">
             <span class="glyphicon glyphicon-pencil"></span>
           </button>
         </form>
-        <form action="{% url "meraki_inv:device_delete" device_id=device.id %}" method="post">{% csrf_token %}
+        <form action="{% url "meraki_inv:device_delete" serial=device.serial %}" method="post">{% csrf_token %}
           <button class="btn" type="submit">
             <span class="glyphicon glyphicon-trash"></span>
           </button>
         </form>
         {% if device.loaned and not device.loaned.returned %}
-        <form action="{% url "meraki_inv:status_edit" device_id=device.id %}" method="post">{% csrf_token %}
+        <form action="{% url "meraki_inv:status_edit" serial=device.serial %}" method="post">{% csrf_token %}
           <input class="btn" type="submit" value="Check in">
         </form>
         Loaned to {{ device.loaned.mooch }} by {{ device.loaned.loaner }} on: {{ device.loaned.loaned.date }}
         {% else %}
-        <form action="{% url "meraki_inv:status_create" device_id=device.id %}" method="get">{% csrf_token %}
+        <form action="{% url "meraki_inv:status_create" serial=device.serial %}" method="get">{% csrf_token %}
           <input class="btn" type="submit" value="Check out">
         </form>
         Not currently on loan
@@ -100,8 +100,8 @@
   <div class="col-sm-7">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <a href="{% url "meraki_inv:note_list" device_id=device.id %}"><h3 class="panel-title">Notes</h3></a>
-        <form action="{% url "meraki_inv:note_add" device_id=device.id %}" method="get">{% csrf_token %}
+        <a href="{% url "meraki_inv:note_list" serial=device.serial %}"><h3 class="panel-title">Notes</h3></a>
+        <form action="{% url "meraki_inv:note_add" serial=device.serial %}" method="get">{% csrf_token %}
           <button class="btn" type="submit">
             <span class="glyphicon glyphicon-plus"></span>
           </button>
@@ -114,7 +114,7 @@
             {{ note.edited }}
           </div>
           <div class="col-sm-2">
-            <a href="{% url "meraki_inv:note_item" device_id=device.id note_id=note.id %}">{{ note.name }}</a>
+            <a href="{% url "meraki_inv:note_item" serial=device.serial note_id=note.id %}">{{ note.name }}</a>
           </div>
           <div class="col-sm-7">
             {{ note.desc }}
