@@ -21,9 +21,9 @@ PROJECT_DIR = os.path.join('/home/meraki/meraki_inv/')
 SECRET_KEY = '5quz2mvjxye^u0&9-al6#=2&(rq)01gkakhs=8ihk)#*ti0+oe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
