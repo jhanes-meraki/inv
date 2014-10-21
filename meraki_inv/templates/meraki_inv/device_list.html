@@ -24,7 +24,7 @@
           <td>{{ device.model_num }}</td>
           <td>{{ device.serial }}</td>
           <td>{{ device.access }}</td>
-          {% if not device.loaned.returned %}
+          {% if device.loaned.returned == None %}
             <td>{{ device.loaned.mooch }}</td>
           {% else %}
             <td>Not currently</td>

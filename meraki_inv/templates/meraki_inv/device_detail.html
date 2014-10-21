@@ -17,7 +17,7 @@
             <span class="glyphicon glyphicon-trash"></span>
           </button>
         </form>
-        {% if device.loaned and not device.loaned.returned %}
+        {% if device.loaned.returned == None %}
         <form action="{% url "meraki_inv:status_edit" serial=device.serial %}" method="post">{% csrf_token %}
           <input class="btn" type="submit" value="Check in">
         </form>
