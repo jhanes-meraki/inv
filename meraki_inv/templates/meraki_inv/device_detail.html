@@ -51,7 +51,11 @@
             Serial:
           </div>
           <div class="col-sm-9 text-left">
+            {% if device.make == "Meraki" %}
+            <a href="https://dashboard.meraki.com/Bridges/n/xCAfec/manage/dashboard/search?search={{ device.serial }}">{{ device.serial }}</a>
+            {% else %}
             {{ device.serial }}
+            {% endif %}
           </div>
         </div>
         <div class="row">

@@ -22,7 +22,11 @@
           <td><a href="{% url "meraki_inv:device_item" serial=device.serial %}">{{ device.model }}</a></td>
           <td>{{ device.make }}</td>
           <td>{{ device.model_num }}</td>
+          {% if device.make == "Meraki" %}
+          <td><a href="https://dashboard.meraki.com/Bridges/n/xCAfec/manage/dashboard/search?search={{ device.serial }}">{{ device.serial }}</a></td>
+          {% else %}
           <td>{{ device.serial }}</td>
+          {% endif %}
           <td>{{ device.access }}</td>
           {% if device.loaned.returned == None %}
             <td>{{ device.loaned.mooch }}</td>
