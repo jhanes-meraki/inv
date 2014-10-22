@@ -15,4 +15,4 @@ class NoteForm(forms.ModelForm):
 class StatusForm(forms.ModelForm):
     class Meta:
         model = Status
-        exclude = ['loaned', 'returned']
+        exclude = ['returned']

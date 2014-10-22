@@ -52,7 +52,7 @@
           </div>
           <div class="col-sm-9 text-left">
             {% if device.make == "Meraki" %}
-            <a href="https://dashboard.meraki.com/Bridges/n/xCAfec/manage/dashboard/search?search={{ device.serial }}">{{ device.serial }}</a>
+            <a href="https://dashboard.meraki.com/Bridges/n/xCAfec/manage/dashboard/search?search={{ device.serial }}" target="_blank">{{ device.serial }}</a>
             {% else %}
             {{ device.serial }}
             {% endif %}

@@ -23,7 +23,7 @@
           <td>{{ device.make }}</td>
           <td>{{ device.model_num }}</td>
           {% if device.make == "Meraki" %}
-          <td><a href="https://dashboard.meraki.com/Bridges/n/xCAfec/manage/dashboard/search?search={{ device.serial }}">{{ device.serial }}</a></td>
+          <td><a href="https://dashboard.meraki.com/Bridges/n/xCAfec/manage/dashboard/search?search={{ device.serial }}" target="_blank">{{ device.serial }}</a></td>
           {% else %}
           <td>{{ device.serial }}</td>
           {% endif %}
