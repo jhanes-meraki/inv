@@ -60,6 +60,10 @@ class NoteCreate(generic.CreateView):
     model = Note
     form_class = NoteForm
 
+    def form_valid(self, form):
+        form.instance.device_id = self.kwargs.get('serial')
+        return super(NoteCreate, self).form_valid(form)
+
 class NoteDelete(generic.DeleteView):
     model = Note
     pk_url_kwarg = "note_id"
@@ -108,6 +112,10 @@ class StatusCreate(generic.CreateView):
     model = Status
     form_class = StatusForm
     pk_url_kwarg = "serial"
+
+    def form_valid(self, form):
+        form.instance.device_id = self.kwargs.get('serial')
+        return super(StatusCreate, self).form_valid(form)
 
 class StatusUpdate(generic.UpdateView):
     model = Status
