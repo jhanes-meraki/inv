@@ -11,6 +11,7 @@ class Device(models.Model):
         ('Support', 'Support'),
     )
     DEVICE_MAKE = (
+        ('Apple', 'Apple'),
         ('Dell', 'Dell'),
         ('Meraki', 'Meraki'),
         ('Microsoft', 'Microsoft'),
