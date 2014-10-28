@@ -4,12 +4,25 @@ from django.db import models
 
 import datetime
 
-# Create your models here.
 class Device(models.Model):
-    access = models.CharField('Access', max_length=45)
+    DEVICE_ACCESS = (
+        ('Escalations', 'Escalations'),
+        ('General', 'General'),
+        ('Support', 'Support'),
+    )
+    DEVICE_MAKE = (
+        ('Dell', 'Dell'),
+        ('Meraki', 'Meraki'),
+        ('Microsoft', 'Microsoft'),
+        ('Samsung', 'Samsung'),
+        ('Startech.com', 'StarTech.com'),
+    )
+
+    access = models.CharField('Access', max_length=45, choices=DEVICE_ACCESS, \
+            default=DEVICE_ACCESS[1][1])
     accessories = models.CharField('Accessories', max_length=45, blank=True)
     features = models.CharField('Features', max_length=45, blank=True)
-    make = models.CharField('Make', max_length=45)
+    make = models.CharField('Make', max_length=45, choices=DEVICE_MAKE)
     model = models.CharField('Model', max_length=45)
     model_num = models.CharField('Model Number', max_length=45, blank=True)
     pword = models.CharField('Password', max_length=45,blank=True)
@@ -24,10 +37,17 @@ class Device(models.Model):
         return reverse('meraki_inv:device_item', args=(self.serial,))
 
 class Status(models.Model):
+    STATUS_LOANER = (
+        ('Paul Lemieux', 'Big Paulie'),
+        ('Jeremy Hanes', 'Jerm'),
+        ('Peter Dallas', 'Pirate Pete'),
+    )
+
     device = models.ForeignKey('Device')
     loaned = models.DateTimeField('Date Loaned', auto_now_add=True, \
             editable=False)
-    loaner = models.CharField('Loaner', max_length=45)
+    loaner = models.CharField('Loaner', max_length=45, \
+            choices=STATUS_LOANER)
     mooch = models.CharField('Mooch', max_length=45)
     returned = models.DateTimeField('Date Returned', null=True)
     def get_absolute_url(self):
@@ -39,7 +59,7 @@ class Note(models.Model):
     name = models.CharField(max_length=45)
     desc = models.CharField(max_length=200)
     device = models.ForeignKey('Device')
-    submitted = models.DateField('Submitted', auto_now=True, editable=False)
+    submitted = models.DateField('Submitted', auto_now_add=True, editable=False)
     edited = models.DateField('Edited', auto_now=True, editable=False)
     def get_absolute_url(self):
         return reverse('meraki_inv:device_item', args=(self.device.serial,))
