@@ -1,0 +1,23 @@
+{% extends "meraki_inv/meraki_inv_base.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Login</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-12">
+          {% include "meraki_inv/snippets/form.html" %}
+              <input type="submit" value="Login" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /.col-sm-4 -->
+
+{% endblock %}
