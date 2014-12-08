@@ -13,6 +13,7 @@ class Device(models.Model):
     DEVICE_MAKE = (
         ('Apple', 'Apple'),
         ('Dell', 'Dell'),
+        ('Lenovo', 'Lenovo'),
         ('Meraki', 'Meraki'),
         ('Microsoft', 'Microsoft'),
         ('Samsung', 'Samsung'),
