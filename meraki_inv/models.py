@@ -8,10 +8,12 @@ class Device(models.Model):
     DEVICE_ACCESS = (
         ('Escalations', 'Escalations'),
         ('General', 'General'),
+        ('Infrastructure', 'Infrastructure'),
         ('Support', 'Support'),
     )
     DEVICE_MAKE = (
         ('Apple', 'Apple'),
+        ('Cisco', 'Cisco'),
         ('Dell', 'Dell'),
         ('Lenovo', 'Lenovo'),
         ('Meraki', 'Meraki'),
