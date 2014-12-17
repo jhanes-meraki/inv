@@ -27,6 +27,7 @@
           <th>Serial</th>
           <th>Access</th>
           <th>Loaned</th>
+          <th>Loaned on</th>
         </tr>
       </thead>
       <tbody>
@@ -41,11 +42,16 @@
           <td>{{ device.serial }}</td>
           {% endif %}
           <td>{{ device.access }}</td>
-          {% if device.loaned.returned == None %}
-            <td>{{ device.loaned.mooch }}</td>
+          <td>{% if device.loaned.returned == None %}
+            {{ device.loaned.mooch }}
           {% else %}
-            <td>Not currently</td>
-          {% endif %}
+            Not currently
+          {% endif %}</td>
+          <td>{% if device.loaned.returned == None %}
+            {{ device.loaned.loaned }}
+          {% else %}
+            Not on loan
+          {% endif %}</td>
         </tr>
       {% endfor %}
       </tbody>
