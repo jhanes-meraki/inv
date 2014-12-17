@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -41,17 +42,10 @@ class Device(models.Model):
         return reverse('meraki_inv:device_item', args=(self.serial,))
 
 class Status(models.Model):
-    STATUS_LOANER = (
-        ('Paul Lemieux', 'Big Paulie'),
-        ('Jeremy Hanes', 'Jerm'),
-        ('Peter Dallas', 'Pirate Pete'),
-    )
-
     device = models.ForeignKey('Device')
     loaned = models.DateTimeField('Date Loaned', auto_now_add=True, \
             editable=False)
-    loaner = models.CharField('Loaner', max_length=45, \
-            choices=STATUS_LOANER)
+    loaner = models.ForeignKey(User, limit_choices_to={'is_staff': True})
     mooch = models.CharField('Mooch', max_length=45)
     returned = models.DateTimeField('Date Returned', null=True)
     def get_absolute_url(self):
