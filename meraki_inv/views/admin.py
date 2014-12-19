@@ -73,6 +73,7 @@ class StatusCreate(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.device_id = self.kwargs.get('serial')
+        form.instance.loaner = self.request.user
         return super(StatusCreate, self).form_valid(form)
 
 class StatusUpdate(LoginRequiredMixin, generic.UpdateView):
