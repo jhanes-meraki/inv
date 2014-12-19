@@ -6,28 +6,45 @@
   <div class="col-sm-5">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">{{ device.model }}</h3>
-        <form action="{% url "meraki_inv:device_edit" serial=device.serial %}" method="get">{% csrf_token %}
-          <button class="btn" type="submit">
-            <span class="glyphicon glyphicon-pencil"></span>
-          </button>
-        </form>
-        <form action="{% url "meraki_inv:device_delete" serial=device.serial %}" method="post">{% csrf_token %}
-          <button class="btn" type="submit">
-            <span class="glyphicon glyphicon-trash"></span>
-          </button>
-        </form>
-        {% if device.loaned.returned == None %}
-        <form action="{% url "meraki_inv:status_edit" serial=device.serial %}" method="post">{% csrf_token %}
-          <input class="btn" type="submit" value="Check in">
-        </form>
-        Loaned to {{ device.loaned.mooch }} by {{ device.loaned.loaner }} on: {{ device.loaned.loaned.date }}
-        {% else %}
-        <form action="{% url "meraki_inv:status_create" serial=device.serial %}" method="get">{% csrf_token %}
-          <input class="btn" type="submit" value="Check out">
-        </form>
-        Not currently on loan
-        {% endif %}
+        <div class="row">
+          <div class="col-sm-5">
+            <h3 class="panel-title">{{ device.model }}</h3>
+          </div>
+          <div class="col-sm-2">
+          <form action="{% url "meraki_inv:device_edit" serial=device.serial %}" method="get">{% csrf_token %}
+            <button class="btn" type="submit">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+          </form>
+          </div>
+          <div class="col-sm-2">
+            <form action="{% url "meraki_inv:device_delete" serial=device.serial %}" method="post">{% csrf_token %}
+              <button class="btn" type="submit">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </form>
+          </div>
+          <div class="col-sm-1">
+            {% if device.loaned.returned == None %}
+            <form action="{% url "meraki_inv:status_edit" serial=device.serial %}" method="post">{% csrf_token %}
+              <input class="btn" type="submit" value="Check in">
+            </form>
+            {% else %}
+            <form action="{% url "meraki_inv:status_create" serial=device.serial %}" method="get">{% csrf_token %}
+              <input class="btn" type="submit" value="Check out">
+            </form>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            {% if device.loaned.returned == None %}
+            Loaned to {{ device.loaned.mooch }} by {{ device.loaned.loaner.get_full_name }} on: {{ device.loaned.loaned.date }}
+            {% else %}
+            Not currently on loan
+            {% endif %}
+          </div>
+        </div>
       </div>
       <div class="panel-body">
         <div class="row">
