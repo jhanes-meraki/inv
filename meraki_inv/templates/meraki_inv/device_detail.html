@@ -41,7 +41,7 @@
             {% if device.loaned.returned == None %}
             Loaned to {{ device.loaned.mooch }} by {{ device.loaned.loaner.get_full_name }} on: {{ device.loaned.loaned.date }}
             {% else %}
-            Not currently on loan
+            Available
             {% endif %}
           </div>
         </div>

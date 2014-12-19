@@ -45,12 +45,10 @@
           <td>{% if device.loaned.returned == None %}
             {{ device.loaned.mooch }}
           {% else %}
-            Not currently
+            Available
           {% endif %}</td>
           <td>{% if device.loaned.returned == None %}
             {{ device.loaned.loaned }}
-          {% else %}
-            Not on loan
           {% endif %}</td>
         </tr>
       {% endfor %}
