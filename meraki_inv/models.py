@@ -14,6 +14,7 @@ class Device(models.Model):
         ('Systems Manager', 'Systems Manager'),
     )
     DEVICE_MAKE = (
+        ('Amazon', 'Amazon'),
         ('Apple', 'Apple'),
         ('Cisco', 'Cisco'),
         ('Dell', 'Dell'),
