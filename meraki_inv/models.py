@@ -11,11 +11,13 @@ class Device(models.Model):
         ('General', 'General'),
         ('Infrastructure', 'Infrastructure'),
         ('Support', 'Support'),
+        ('Systems Manager', 'Systems Manager'),
     )
     DEVICE_MAKE = (
         ('Apple', 'Apple'),
         ('Cisco', 'Cisco'),
         ('Dell', 'Dell'),
+        ('Google', 'Google'),
         ('Lenovo', 'Lenovo'),
         ('Meraki', 'Meraki'),
         ('Microsoft', 'Microsoft'),
